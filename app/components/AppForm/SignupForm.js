@@ -3,9 +3,9 @@ import { View, StyleSheet, Text } from "react-native";
 import { StackActions } from "@react-navigation/native"; 
 import { useLogin } from '../../context/LoginProvider';
 import { isValidEmail, isValidObjField, updateError } from "../../utils/methods";
-import FormContainer from "./FormContainer";
-import FormInput from "./FormInput";
-import FormSubmitButton from "./FormSubmitButton";
+import FormContainer from "../common/FormContainer";
+import FormInput from "../common/FormInput";
+import FormSubmitButton from "../common/FormSubmitButton";
 
 import { Formik } from "formik";
 import * as Yup from "yup";

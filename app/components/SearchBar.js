@@ -32,8 +32,8 @@ const SearchBar = ({ setSearchFocused }) => {
   const handleSearch = async value => {
     // console.log(value);
     const res = await client.post(`/post/search/${value}`);
-    console.log(`/post/search/${value}`)
-    console.log(res.data.success)
+    // console.log(`/post/search/${value}`)
+    // console.log(res.data.success)
     if (res.data.success) {
       setNotFound('');
       // console.log(res)

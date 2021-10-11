@@ -10,10 +10,10 @@ import PostsDetail from '../screens/PostsDetail';
 import AppForm from '../AppForm/AppForm';
 import AddPost from '../post/addpost';
 import ImageUpload from '../AppForm/ImageUpload';
-import UserProfile from '../AppForm/UserProfile';
+import UserProfile from '../screens/UserProfile';
 import UpdateForm from '../post/updatePost';
 import { useLogin } from '../../context/LoginProvider';
-
+ 
 const Stack = createStackNavigator();
  
 const LoggedIn = () => {

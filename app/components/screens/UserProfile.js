@@ -12,12 +12,11 @@ const UserProfile = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{profile.email}</Text>
-      <Text>{profile.name}</Text>
-      <Text>{profile.role}</Text>
-      <Text>{profile.username}</Text>
-      <Text>{profile.password}</Text>
-
+      <Text style={styles.email}>{profile.email}</Text>
+      <Text style={styles.name}>{profile.name}</Text>
+      <Text style={styles.role}>{profile.role}</Text>
+      <Text style={styles.username}>{profile.username}</Text>
+      <Text style={styles.password}>{profile.password}</Text>
     </View>
   );
 };

@@ -5,9 +5,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import client from '../../api/client';
 import { useLogin } from '../../context/LoginProvider';
 import { isValidEmail, isValidObjField, updateError } from '../../utils/methods';
-import FormContainer from './FormContainer';
-import FormInput from './FormInput';
-import FormSubmitButton from './FormSubmitButton';
+import FormContainer from '../common/FormContainer';
+import FormInput from '../common/FormInput';
+import FormSubmitButton from '../common/FormSubmitButton';
  
 const LoginForm = () => {
   const { setIsLoggedIn, setProfile } = useLogin();

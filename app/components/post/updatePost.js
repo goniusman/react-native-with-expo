@@ -6,9 +6,9 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 // import SignupForm from "../AppForm/SignupForm";
 import { isValidEmail, isValidObjField, updateError } from "../../utils/methods";
-import FormContainer from "./FormContainer";
-import FormInput from "./FormInput"; 
-import FormSubmitButton from "./FormSubmitButton";
+import FormContainer from "../common/FormContainer";
+import FormInput from "../common/FormInput"; 
+import FormSubmitButton from "../common/FormSubmitButton";
 
 import client from "../../api/client"; 
 

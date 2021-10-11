@@ -34,7 +34,7 @@ const SearchModel = ({ visible, data, notFound }) => {
         {data.map(item => (
           <FlatCard
             item={item}
-            key={item.id}
+            key={item._id}
             onPress={() => navigation.navigate('PostsDetail', { item })}
           />
         ))}

@@ -29,6 +29,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "Hi there , this is very simple crud blog app with authentication. you can test"
+    "description": "Hi there , this is very simple crud blog app with authentication. you can test",
+    "githubUrl": "https://github.com/goniusman/react-native-with-expo"
   }
 }

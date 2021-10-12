@@ -6,14 +6,14 @@ const LoginContext = createContext();
 const LoginProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profile, setProfile] = useState({});
-
+ 
   const setUserInfo = async () => {
     const result = await AsyncStorage.getItem("user");
     if (result !== null) {
       setProfile(JSON.parse(result))
       setIsLoggedIn(true);
     }else{
-      setIsLoggedIn(false);
+      setIsLoggedIn(true);
     };
   };
 

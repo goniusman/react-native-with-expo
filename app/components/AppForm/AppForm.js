@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-
 import {
   ScrollView,
   StyleSheet,
@@ -7,6 +6,7 @@ import {
   Animated,
   Dimensions,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage"; 
 
 import FormHeader from "./FormHeader";
 import FormSelectorBtn from "./FormSelectorBtn";
@@ -16,6 +16,8 @@ import LoginForm from "./LoginForm";
 const { width } = Dimensions.get("window");
 
 export default function AppForm({ navigation }) {
+  // const keys = AsyncStorage.getAllKeys();
+
   const animation = useRef(new Animated.Value(0)).current;
   const scrollView = useRef();
 
@@ -41,7 +43,7 @@ export default function AppForm({ navigation }) {
   });
 
   return (
-    <View style={{ flex: 1, paddingTop: 120 }}>
+    <ScrollView style={{ flex: 1, paddingTop: 120 }}>
       <View style={{ height: 80 }}>
         <FormHeader
           leftHeading="Welcome "
@@ -88,7 +90,7 @@ export default function AppForm({ navigation }) {
           <SignupForm navigation={navigation} />
         </ScrollView>
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 }
 

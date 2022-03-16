@@ -5,6 +5,8 @@ import SearchModel from '../components/common/SearchModel';
 
 import client from "../api/client"; 
 
+import postsApi from "../api/postsApi";
+
 let timeOutId;
 
 const debounce = (func, delay) => {
@@ -31,13 +33,13 @@ const SearchBar = ({ setSearchFocused }) => {
 
   const handleSearch = async value => {
     // console.log(value);
-    const res = await client.post(`/post/search/${value}`);
+    const res = await postsApi.searchPost(value);
     // console.log(`/post/search/${value}`)
-    // console.log(res.data.success)
+    // console.log(res)
     if (res.data.success) {
       setNotFound('');
       // console.log(res)
-      setData(res.data.data);
+      setData(res.data.post); 
     }
 
     if (!res.data.success) {
@@ -45,7 +47,7 @@ const SearchBar = ({ setSearchFocused }) => {
     }
   };
 
-  const debounceSearch = debounce(handleSearch, 500);
+  const debounceSearch = debounce(handleSearch, 1000);
 
   return (
     <>

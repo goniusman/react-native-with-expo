@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -10,15 +10,15 @@ import FormInput from '../common/FormInput';
 import FormSubmitButton from '../common/FormSubmitButton';
  
 const LoginForm = () => {
-  const { setIsLoggedIn, setProfile } = useLogin();
+
   const [userInfo, setUserInfo] = useState({
     email: '',
     password: '', 
   });
-
   const [error, setError] = useState('');
-
   const { email, password } = userInfo;
+  const { setIsLoggedIn, setProfile } = useLogin();
+
 
   const handleOnChangeText = (value, fieldName) => {
     setUserInfo({ ...userInfo, [fieldName]: value });
@@ -30,7 +30,7 @@ const LoginForm = () => {
 
     if (!isValidEmail(email)) return updateError('Invalid email!', setError);
 
-    if (!password.trim() || password.length < 8)
+    if (!password.trim() || password.length < 6)
       return updateError('Password is too short!', setError);
 
     return true;
@@ -38,9 +38,15 @@ const LoginForm = () => {
 
   const submitForm = async () => {
     if (isValidForm()) {
-      try {
-        const res = await client.post('/user/login', { ...userInfo }); 
-    //  console.log(res)
+      
+      // console.log('i am here fgdd');
+      
+      const res = await client.post('/user/login', { ...userInfo }); 
+
+      // console.log('nice to meet you')
+
+        // console.log(res.data) 
+
         if (res.data.success) {
           setUserInfo({ email: '', password: '' });
           setProfile(res.data.user);
@@ -49,11 +55,11 @@ const LoginForm = () => {
           await AsyncStorage.setItem("token", JSON.stringify(res.data.token));
           // console.log(res.data)
         }else{
-          console.log('There are no connections ')
+          console.log(res.data)
         }
-      } catch (error) {
-        console.log(error);
-      }
+      
+    }else{
+      console.log('Invalid Data')
     }
   };
 

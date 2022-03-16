@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Constants } from 'expo';
 import { View, StyleSheet, Text, Button, SafeAreaView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
@@ -23,13 +23,14 @@ const Home = () => {
     AsyncStorage.removeItem("user"); 
     AsyncStorage.removeItem("token"); 
     setIsLoggedIn(false);
-
   }
-  const token = AsyncStorage.getItem('token');
+
+  // const token = AsyncStorage.getItem('token');
   // token.then(result => console.log(result))
 
   const [isSearchFocused, setSearchFocused] = useState(false);
-  const [
+ 
+  const [ 
     featuredPosts,
     politicalPosts,
     entertainmentPosts,
@@ -37,54 +38,56 @@ const Home = () => {
     breakingPosts,
     loading,
   ] = usePosts(); 
+
+
   const navigation = useNavigation();
 
-  return (
-    <SafeAreaView>
-      <ActivityIndicator visible={loading} />
+  return (<>
+
+
+    <ActivityIndicator visible={loading} />
       <Screen isSearchFocused={isSearchFocused}>
-      
-        <SearchBar setSearchFocused={setSearchFocused} />
-        
-        <FeaturedPosts item={featuredPosts} />
-
-      
-
-        <BreakingPosts data={breakingPosts} /> 
-        
-        <PoliticalPosts data={politicalPosts} />   
-        <TechPosts data={techPosts} />
-        <EntertainmentPosts key="home" data={entertainmentPosts} />
-
-        <View>
-
-   
-   
-           <AppButton
-            onPress= {() => navigation.navigate('UserProfile')}
-            title="Profile"
-            //  color="#f194ff"
-           /> 
+        <SafeAreaView> 
+            <SearchBar setSearchFocused={setSearchFocused} />
             
-            <AppButton
-              onPress= {() => navigation.navigate('AddPost')}
-              title="Create Post"
-              //  color="#f194ff"
-            />
-            
-            <AppButton
-            onPress= {() => navigation.navigate('ImageUpload')}
-            title="Upload Profile Picture"
-            //  color="#f194ff"
-            /> 
-            <AppButton
-            onPress= {() => logOut()}
-            title="Log Out"
-            //  color="#f194ff"
-            />
-         </View>
-      </Screen>
-    </SafeAreaView>
+  
+              <FeaturedPosts item={featuredPosts} />
+
+              <BreakingPosts data={breakingPosts} /> 
+              
+              <PoliticalPosts data={politicalPosts} />   
+              <TechPosts data={techPosts} />
+              <EntertainmentPosts key="home" data={entertainmentPosts} />
+
+              <View>
+                {/* <AppButton
+                  onPress= {() => navigation.navigate('UserProfile')}
+                  title="Profile"
+                  //  color="#f194ff"
+                /> 
+                  
+                  <AppButton
+                    onPress= {() => navigation.navigate('AddPost')}
+                    title="Create Post"
+                    //  color="#f194ff"
+                  />
+                  
+                  <AppButton
+                  onPress= {() => navigation.navigate('ImageUpload')}
+                  title="Upload Profile Picture"
+                  //  color="#f194ff"
+                  />  */}
+
+                  <AppButton
+                  onPress= {() => logOut()}
+                  title="Log Out"
+                  //  color="#f194ff"
+                  />
+              </View>
+        </SafeAreaView>
+        </Screen>
+
+        </>
   );
 };
 

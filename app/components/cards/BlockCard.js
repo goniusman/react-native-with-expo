@@ -7,14 +7,11 @@ import {
   Button,
   Text
 } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
 
 import Title from '../common/Title';
 import Subtitle from '../common/Subtitle';
-
 import client from "../../api/client";
-
 
 const BlockCard = ({ style, imageStyle, item, onPress }) => {
   const navigation = useNavigation();
@@ -24,7 +21,7 @@ const BlockCard = ({ style, imageStyle, item, onPress }) => {
   // let path = url + image;
   
   const deleteItem = async (id) => {
-    console.log(id); 
+    // console.log(id); 
     const res = await client.delete(`/post/${id}`);
      
     if (res.data.success) {
@@ -33,45 +30,41 @@ const BlockCard = ({ style, imageStyle, item, onPress }) => {
 
   }
  
-
   return (
-
-<>
-
+     
+    <View key={_id}>
 
       <View style={styles.actionbtn}>
-      
         <Text onPress={() => deleteItem(_id)} >Delete</Text>
         <Text onPress={() => navigation.push('UpdateForm', {it})} >Update</Text>
       </View>
 
-    <TouchableWithoutFeedback onPress={onPress} >
+      <TouchableWithoutFeedback onPress={onPress} >
+          
+        <View style={[styles.container, style]}>
         
-      <View style={[styles.container, style]}>
-      
- 
-        {/* <Image source={{
-          width: 100,
-          height: 100,
-          uri: url }} 
-        style={[styles.image, imageStyle]} /> */}
-   
-        
-        <Image
-          blurRadius={1}
-          fadeDuration={10} 
-          // resizeMode={}
-         source={require('../../../assets/icon.png')} style={[styles.image, imageStyle]} />
+          {/* <Image source={{
+            width: 100,
+            height: 100,
+            uri: url }} 
+          style={[styles.image, imageStyle]} /> */}
+    
+          
+          <Image
+            blurRadius={1}
+            fadeDuration={10} 
+            // resizeMode={}
+            source={require('../../../assets/icon.png')} style={[styles.image, imageStyle]} />
 
-        <View style={styles.contentContainer}>
-          <Title>{title}</Title>
-          <Subtitle>{description}</Subtitle>
+          <View style={styles.contentContainer}>
+            <Title>{title}</Title>
+            <Subtitle>{description}</Subtitle>
+          </View>
+
+        
         </View>
-
-       
-      </View>
-    </TouchableWithoutFeedback>
-    </>
+      </TouchableWithoutFeedback>
+    </View>
 
   );
 };
@@ -92,15 +85,14 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   actionbtn: {
-    marginTop: '5px',
-    padding: '2px',
-    position: 'absolute',
     zIndex: 999,
     display: 'flex',
+    position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    textAlign: 'right',
   }
 });
 

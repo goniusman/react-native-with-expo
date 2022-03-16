@@ -20,18 +20,19 @@ const PostsDetail = ({ route }) => {
   const [posts, setPosts] = useState({});
   const [relatedPosts, setRelatedPosts] = useState([]);
   const { _id: postId, category: postCategory } = route.params.item;
-  const [loading, setLoading] = useState(false);
+  // console.log(route)
+  const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation();
 
   const fetchPost = async id => {
-    setLoading(false);
     const result = await postsApi.getSingle(id);
     setPosts(result);
+    setLoading(false);
   };
 
   const fetchRelatedPosts = async category => {
-    const result = await postsApi.getByCategory(postCategory, 3);
+    const result = await postsApi.getByCategory(category, 3);
     setRelatedPosts(result.filter(item => item._id !== postId));
     setLoading(false);
   };
@@ -39,22 +40,31 @@ const PostsDetail = ({ route }) => {
   useEffect(() => {
     fetchPost(postId);
     fetchRelatedPosts(postCategory);
+    console.log(posts)
   }, []);
 
   const { title, description, image , _id} = posts;
+
   return (
     <>
       <ActivityIndicator visible={loading} />
-      <ScrollView style={styles.container} key={ _id}>
-        <Image style={styles.image} source={{ uri: image }} />
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.content}>{description}</Text>
-        </View>
-        <View style={styles.relatedPostContainer}>
-          <HorizotalList data={relatedPosts} title='Related Posts' />
-        </View>
-      </ScrollView>
+          <ScrollView style={styles.container}>
+     
+          <View  key={ _id }>
+             <Image style={styles.image} source={{ uri: image}} />
+            <View style={styles.contentContainer}>
+              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.content}>{description}</Text>
+            </View>
+            <View style={styles.relatedPostContainer}>
+              <HorizotalList data={relatedPosts} title='Related Posts' />
+            </View>
+          </View>
+         
+    
+        </ScrollView>
+
+  
       <Close onPress={() => navigation.popToTop()} />
     </>
   );

@@ -1,15 +1,24 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { StackActions } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { Picker } from '@react-native-community/picker';
 import { Formik } from "formik";
-import * as Yup from "yup";
-import SignupForm from "../AppForm/SignupForm";
-import { isValidEmail, isValidObjField, updateError } from "../../utils/methods";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import client from "../../api/client";
+import { isValidObjField, updateError } from "../../utils/methods";
 import FormContainer from "../common/FormContainer";
-import FormInput from "../common/FormInput"; 
+import FormInput from "../common/FormInput";
 import FormSubmitButton from "../common/FormSubmitButton";
 
-import client from "../../api/client"; 
+const cities = [
+  {name:"Los Angeles", id: 1},
+  {name:"Philadelphia", id: 2},
+  {name:"Chicago", id: 3},
+  {name:"Washington DC", id: 4},
+  {name:"New York", id: 5},
+  {name:"San Diego", id: 6},
+]
+
+
 
 // const validationSchema = Yup.object({
 //   title: Yup.string()
@@ -39,6 +48,10 @@ const PostForm = ({ navigation }) => {
     author: "",
   })
 
+  // const formik = useFormik({
+  //   initialValues: { city_name: '' },
+  // });
+
 
   const [error, setError] = useState("");
 
@@ -46,7 +59,7 @@ const PostForm = ({ navigation }) => {
 
   const handleOnChangeText = (value, fieldName) => {
     setPost({ ...post, [fieldName]: value });
-    console.log(value)
+    // console.log(value)
   };
 
   const isValidForm = () => {
@@ -80,14 +93,27 @@ const PostForm = ({ navigation }) => {
 
   const submitPost = async (values, formikActions) => {
 
+    // console.log(token); 
+    function stripquotes(a) {
+          if (a.charAt(0) === '"' && a.charAt(a.length-1) === '"') {
+              return a.substr(1, a.length-2);
+          }
+          return a;
+      }
+    const token = await AsyncStorage.getItem('token');
+    try{
+      
+      // const { title, description, category, tag, author } = post;
+      const res = await client.post("/blog", post, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'authorization': `Bearer ${stripquotes(token)}`,
+        }
+      }
+      );
 
-    // console.log(post);
-    const { title, description, category, tag, author } = post;
-    const res = await client.post("/post", {
-      title, description, category, tag, author
-    });
-
-    console.log(res);
+    // console.log(res);
     // if (res.data.success) {
       
     // }
@@ -102,11 +128,18 @@ const PostForm = ({ navigation }) => {
 
     formikActions.resetForm();
     formikActions.setSubmitting(false);
+
+
+    }catch (error) {
+      console.log(error.message);
+    }
+
+    
   };
 
   
   return (
-
+    <ScrollView>
     <FormContainer>
       <Formik
         initialValues={post}
@@ -152,6 +185,27 @@ const PostForm = ({ navigation }) => {
                 placeholder="Type something details here..."
               />
 
+{/* <View>
+<Picker 
+            enabled={true} 
+            mode="dropdown"
+            placeholder="Select City"
+            // onValueChange={formik.handleChange('city_name')}
+            // selectedValue={formik.values.city_name}
+      >
+       {cities.map((item) => {
+        return
+          (<Picker.Item 
+              label={item.name.toString()} 
+              value={item.name.toString()} 
+              key={item.id.toString()} />)
+        })}
+     </Picker>
+</View> */}
+
+
+
+
               <FormInput
                 name="category"
                 value={category}
@@ -196,6 +250,7 @@ const PostForm = ({ navigation }) => {
         }}
       </Formik>
     </FormContainer>
+    </ScrollView>
   );
 };
 

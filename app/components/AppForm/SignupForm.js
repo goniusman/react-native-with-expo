@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { StackActions } from "@react-navigation/native"; 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useLogin } from '../../context/LoginProvider';
 import { isValidEmail, isValidObjField, updateError } from "../../utils/methods";
 import FormContainer from "../common/FormContainer";
@@ -72,12 +74,12 @@ const SignupForm = ({ navigation }) => {
     return true;
   };
 
-  const sumbitForm = () => {
-    if (isValidForm()) {
-      // submit form
-      console.log(userInfo);
-    }
-  };
+  // const sumbitForm = () => {
+  //   if (isValidForm()) {
+  //     // submit form
+  //     console.log(userInfo);
+  //   }
+  // };
 
   const signUp = async (values, formikActions) => {
     const res = await client.post("/user/register", {
@@ -87,26 +89,44 @@ const SignupForm = ({ navigation }) => {
     // console.log(res.data);
     
     if (res.data.success) {
+
+        setIsLoggedIn(true);
+        await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
+
+       
+        // setUserInfo({ email: '', password: '' });
+        setProfile(res.data.user);
+     
+
+
       const signInRes = await client.post("/user/login", {
         email: values.email,
         password: values.password,
       });
+
       if (signInRes.data.success) {
-        // setUserInfo({ email: '', password: '' });
-        // setProfile(res.data.user);
+
+        setProfile(res.data.user);
         setIsLoggedIn(true);
         await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
-        // console.log(res.data.user) 
-        navigation.dispatch(
-          StackActions.replace("ImageUpload", {
-            token: signInRes.data.token,
-          })
-        );
+        await AsyncStorage.setItem("token", JSON.stringify(res.data.token));
+
+        navigation.dispatch(StackActions.replace('ImageUpload'));
+
+        // navigation.dispatch(
+        //   StackActions.replace("ImageUpload", {
+        //     token: signInRes.data.token,
+        //   })
+        // );
+        
       }
+
+      formikActions.resetForm();
+      formikActions.setSubmitting(false);
+
     }
 
-    formikActions.resetForm();
-    formikActions.setSubmitting(false);
+
   };
 
   return (

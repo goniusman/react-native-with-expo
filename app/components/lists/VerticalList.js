@@ -6,6 +6,7 @@ import Title from '../common/Title';
 import VerticalCard from '../cards/VerticalCard';
  
 const VerticalList = ({ title, data }) => {
+
   const navigation = useNavigation();
 
  
@@ -14,7 +15,7 @@ const VerticalList = ({ title, data }) => {
     <View>
       {title && <Title>{title}</Title>}
       <View style={styles.container}>
-        {data.map(item => (
+        {data.length > 0 && data.map(item => (
           <VerticalCard
             item={item}
             key={item._id}

@@ -34,32 +34,53 @@ const ImageUpload = props => {
     }
   };
 
-  const uploadProfileImage = async () => {
-    const formData = new FormData();
-    console.log(profileImage);
-    // formData.append('profile', {
-    //   name: new Date() + '_profile',
-    //   uri: profileImage,
-    //   type: 'image/jpg',
-    // });
 
-//     const token = AsyncStorage.getItem('token');
-//     console.log(token)
-//     try {
-//       const res = await client.put('/user/profile-picture', formData, {
-//         headers: {
-//           Accept: 'application/json',
-//           'Content-Type': 'multipart/form-data',
-//           authorization: `JWT ${token}`,
-//         },
-//       });
-// console.log(res)
-//       if (res.data.success) {
-//         props.navigation.dispatch(StackActions.replace('UserProfile'));
-//       }
-//     } catch (error) {
-//       console.log(error.message);
-//     }
+ 
+
+  const uploadProfileImage = async () => {
+
+  
+   
+    // console.log(token) 
+
+    const formData = new FormData();
+    // console.log(profileImage);
+    formData.append('profile', {
+      name: new Date() + '_profile',
+      uri: profileImage,
+      type: 'image/jpg',
+    });
+
+    const token = await AsyncStorage.getItem('token');
+   console.log(token);
+    function stripquotes(a) {
+      if (a.charAt(0) === '"' && a.charAt(a.length-1) === '"') {
+          return a.substr(1, a.length-2);
+      }
+      return a;
+    }
+
+    try {
+      const res = await client.put('/user/profile-picture', formData, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'authorization': `Bearer ${stripquotes(token)}`,
+        },
+      });
+      // console.log(res.data)
+      if (res.data.success) {
+
+        // setProfile(res.data.user);
+        // setIsLoggedIn(true);
+        // await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
+        // await AsyncStorage.setItem("token", JSON.stringify(res.data.token));
+
+        props.navigation.dispatch(StackActions.replace('UserProfile'));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -83,7 +104,7 @@ const ImageUpload = props => {
           <Text
             onPress={uploadProfileImage}
             style={[
-              styles.skip, 
+              styles.uploadBtn, 
               { backgroundColor: 'green', color: 'white', borderRadius: 8 },
             ]}
           >

@@ -10,7 +10,7 @@ import {
 const FormSelectorBtn = ({ title, backgroundColor, style, onPress }) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <Animated.View style={[styles.container, style, { backgroundColor }]}>
+      <Animated.View style={[styles.container, style, { backgroundColor }]} >
         <Text style={styles.title}>{title}</Text>
       </Animated.View>
     </TouchableWithoutFeedback>

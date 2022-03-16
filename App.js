@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
+import LoginProvider from './app/context/LoginProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './app/components/navigation/AppNavigator';
-import LoginProvider from './app/context/LoginProvider';
 
 export default function App() {
   return (
@@ -12,6 +12,14 @@ export default function App() {
       </NavigationContainer>
     </LoginProvider>
   );
+
+
+          // return (
+          //   <View>
+
+          //      <Test />
+          //   </View>
+          // )
 }
 
 const styles = StyleSheet.create({});

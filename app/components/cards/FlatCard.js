@@ -36,14 +36,14 @@ const FlatCard = ({ item, onPress }) => {
 
     <View>
 
-    <View style={styles.actionbtn}>
+    {/* <View style={styles.actionbtn}>
           
         <Text onPress={() => deleteItem(_id)} >Delete</Text>
         <Text onPress={() => navigation.push('UpdateForm', {it})} >Update</Text>
 
         
         
-    </View>
+    </View> */}
 
     <TouchableWithoutFeedback onPress={onPress} >
       <View style={styles.container}>

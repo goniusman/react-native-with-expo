@@ -1,0 +1,162 @@
+{
+  "posts": [
+    {
+      "id": "6f17ff52-7e78-4dd4-9592-31ce04fe5dcc",
+      "title": "first psot",
+      "description": "this isfsfdsfd\n",
+      "authorId": 4
+    },
+    {
+      "id": "1a71a789-8b22-484d-a7c5-ece1cb874968",
+      "title": "new post",
+      "description": "new post description",
+      "authorId": 3
+    },
+    {
+      "id": "84175ebf-bca4-4cbf-b693-6ca360140dfb",
+      "title": "erewrew",
+      "description": "dsfsdfds fsdafadsf",
+      "authorId": 3
+    },
+    {
+      "id": "6aac84c8-2b3b-4087-8de3-d145897b6d5e",
+      "title": "ewerwerwerewrdsfsdfdsfsd",
+      "description": "dsfsfd adfadsfds",
+      "authorId": 3
+    },
+    {
+      "id": "18f55afd-7a9c-4744-9c7d-33a1a1ffe8a5",
+      "title": "osma post",
+      "description": "osman descriptin is here",
+      "authorId": 2
+    },
+    {
+      "id": "f0f291db-70eb-458d-9fa2-f7ac4729359a",
+      "title": "anothere post",
+      "description": "this is another description is here....",
+      "authorId": 2
+    },
+    {
+      "id": "56ae406c-3736-460f-92b2-bbed7646a777",
+      "title": "new post for this checki id",
+      "description": " new post for this checki id new post for this checki id",
+      "authorId": 4
+    },
+    {
+      "id": "295f8dbc-5378-4f39-a3a3-f5aea5334484",
+      "title": "n i ddd  d",
+      "description": "n i ddd  d n i ddd  d n i ddd  d",
+      "authorId": 4
+    }
+  ],
+  "comments": [
+    {
+      "comment": "dfgdsgd gdfgdfs",
+      "author": "osman",
+      "postId": "6f17ff52-7e78-4dd4-9592-31ce04fe5dcc",
+      "id": 1
+    },
+    {
+      "comment": "dfgdsgd gdfgdfs",
+      "author": "osman",
+      "postId": "6f17ff52-7e78-4dd4-9592-31ce04fe5dcc",
+      "id": 2
+    },
+    {
+      "comment": "dfgdsgd gdfgdfsfsdfadf",
+      "id": 3
+    },
+    {
+      "comment": "sdfgdfsgfds sdfgfdsgfds",
+      "author": "osman",
+      "postId": "6f17ff52-7e78-4dd4-9592-31ce04fe5dcc",
+      "id": 4
+    },
+    {
+      "comment": "sdfgdfsgfds sdfgfdsgfds dxfgdsg",
+      "id": 6
+    },
+    {
+      "comment": "sdfgdfsgfds sdfgfdsgfds dxfgdsg fdsfdsaffsfsd",
+      "id": 7
+    },
+    {
+      "comment": "cxdxxfvdfg",
+      "author": "osman",
+      "postId": "f0f291db-70eb-458d-9fa2-f7ac4729359a",
+      "id": 8
+    },
+    {
+      "comment": "",
+      "author": "osman",
+      "postId": "f0f291db-70eb-458d-9fa2-f7ac4729359a",
+      "id": 9
+    },
+    {
+      "comment": "bcvbcv",
+      "author": "osman",
+      "postId": "f0f291db-70eb-458d-9fa2-f7ac4729359a",
+      "id": 10
+    },
+    {
+      "comment": "cxvxcv",
+      "author": "osman",
+      "postId": "f0f291db-70eb-458d-9fa2-f7ac4729359a",
+      "id": 11
+    },
+    {
+      "comment": "scfdsfsd",
+      "author": "osman",
+      "postId": "18f55afd-7a9c-4744-9c7d-33a1a1ffe8a5",
+      "id": 12
+    },
+    {
+      "comment": "fdgdfgfd",
+      "author": "osman",
+      "postId": "f0f291db-70eb-458d-9fa2-f7ac4729359a",
+      "id": 13
+    },
+    {
+      "comment": "dsfsdf fdsfsdf fdsfsdf",
+      "author": "osman",
+      "postId": "56ae406c-3736-460f-92b2-bbed7646a777",
+      "id": 14
+    },
+    {
+      "comment": "hello this is first comment... ",
+      "author": "osman",
+      "postId": "56ae406c-3736-460f-92b2-bbed7646a777",
+      "id": 15
+    }
+  ],
+  "register": [
+    {
+      "name": "Osman",
+      "email": "goniusman@gmail.com",
+      "website": "https://brilliant.com.bd/",
+      "password": "12345",
+      "id": 1
+    },
+    {
+      "name": "tanjila",
+      "email": "tanjila@gmail.com",
+      "website": "https://tanjila.com.bd/",
+      "password": "12345",
+      "id": 2
+    },
+    {
+      "name": "mobile",
+      "email": "noman@gmail.com",
+      "website": "https://brilliant.com.bd/",
+      "password": "54321",
+      "id": 3
+    },
+    {
+      "name": "another osman",
+      "email": "another@gmail.com",
+      "website": "https://brilliant.com.bd/",
+      "password": "12345",
+      "id": 4
+    }
+  ]
+}

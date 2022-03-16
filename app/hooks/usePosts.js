@@ -2,33 +2,32 @@ import { useState, useEffect } from "react";
 import postsApi from "../api/postsApi";
 
 const usePosts = () => {
-  // const [posts, setPosts] = useState({});
+  const [posts, setPosts] = useState({});
   const [featuredPosts, setFeaturedPosts] = useState({});
   const [breakingPosts, setBreakingPosts] = useState([]);
   const [politicalPosts, setPoliticalPosts] = useState([]);
   const [techPosts, setTechPosts] = useState([]);
   const [entertainmentPosts, setEntertainmentPosts] = useState([]);
-  const qty = 3;
+  const qty = 5;
   const [loading, setLoading] = useState(false);
 
   const filterFeatured = (data) => {
+
     return data.filter((item) => item.isPublished === true).reverse()[0];
     // return data.filter((item) => item.isPublished === true).reverse();
   }; 
 
   const filterByCategory = (data, category) => {
-    // const result = data
-    //   .filter((item) => item.category === category)
-    //   .reverse()
-    //   .splice(0, qty);  
-      
-      const result = data
+    const result = data
+      .filter((item) => item.category === category)
       .reverse()
-      .splice(0, qty);
-
+      .splice(0, qty);  
       
+      // const result = data
+      // .reverse()
+      // .splice(0, qty);
 
-    if (result.length) {
+    if (result.length > 3) {
       result.push({ type: "viewMore", category: category, _id: category });
     }
 
@@ -36,20 +35,30 @@ const usePosts = () => {
   };
 
   const filterMultiplePosts = async () => {
-    // setLoading(true);
+    setLoading(true);
     const allPosts = await postsApi.getAll();
     // console.log(allPosts);
+    if(allPosts && allPosts.length > 0) {
+      setFeaturedPosts(filterFeatured(allPosts));
+      setPoliticalPosts(filterByCategory(allPosts, "politics"));
+      setBreakingPosts(filterByCategory(allPosts, "breaking-posts"));
+      setEntertainmentPosts(filterByCategory(allPosts, "entertainment"));
+      setTechPosts(filterByCategory(allPosts, "tech"));
+      setLoading(false);
+    }
     // setPosts(filterPosts(allPosts));   
-    setFeaturedPosts(filterFeatured(allPosts));
-    setPoliticalPosts(filterByCategory(allPosts, "politics"));
-    setBreakingPosts(filterByCategory(allPosts, "breaking-posts"));
-    setEntertainmentPosts(filterByCategory(allPosts, "entertainment"));
-    setTechPosts(filterByCategory(allPosts, "tech"));
-    setLoading(false);
+    // setLoading(true);
   };  
  
-  useEffect(() => {
-    filterMultiplePosts();
+  useEffect( async () => {
+     await filterMultiplePosts();
+      // return () => {
+      //   setFeaturedPosts({}); // This worked for me
+      //   setEntertainmentPosts({}); // This worked for me
+      //   setPoliticalPosts({}); // This worked for me
+      //   setTechPosts({}); // This worked for me
+      //   setBreakingPosts({}); // This worked for me
+      // };
   }, []);
 
   return [

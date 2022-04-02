@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { Constants } from 'expo';
-import { View, StyleSheet, Text, Button, SafeAreaView } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from "@react-native-async-storage/async-storage"; 
-import { ButtonGroup } from 'react-native-elements';
+import React, { useState } from "react";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { useLogin } from '../../context/LoginProvider';
 // import Constants from 'expo-constants';
 import usePosts from "../../hooks/usePosts";
-import Screen from "../common/Screen";
-import SearchBar from "../SearchBar";
-import FeaturedPosts from "../FeaturedPosts";
 import BreakingPosts from "../BreakingPosts";
-import PoliticalPosts from "../PoliticalPosts";
-import TechPosts from "../TechPosts";
-import EntertainmentPosts from "../EntertainmentPosts";
 import ActivityIndicator from "../common/ActivityIndicator";
-import { useLogin } from '../../context/LoginProvider';
-import AppButton from '../common/Button';
+import AppButton from "../common/Button";
+import Screen from "../common/Screen";
+import EntertainmentPosts from "../EntertainmentPosts";
+import FeaturedPosts from "../FeaturedPosts";
+import PoliticalPosts from "../PoliticalPosts";
+import SearchBar from "../SearchBar";
+import TechPosts from "../TechPosts";
+
 
 const Home = () => {
   const { setIsLoggedIn, setProfile } = useLogin();
+  const [Error, setError] = useState('')
   const logOut = () => {
     AsyncStorage.removeItem("user"); 
     AsyncStorage.removeItem("token"); 
     setIsLoggedIn(false);
   }
-
+  const {profile} = useLogin();
   // const token = AsyncStorage.getItem('token');
   // token.then(result => console.log(result))
 
@@ -47,9 +47,19 @@ const Home = () => {
 
     <ActivityIndicator visible={loading} />
       <Screen isSearchFocused={isSearchFocused}>
+
         <SafeAreaView> 
+
             <SearchBar setSearchFocused={setSearchFocused} />
             
+            {
+              profile && !profile.verified ? (
+                <Text style={styles.sampleStyle}
+                  onPress= {() => navigation.navigate('Verification')}
+               
+                  >Verify your email</Text>
+              ) : null
+            }
   
               <FeaturedPosts item={featuredPosts} />
 
@@ -78,6 +88,7 @@ const Home = () => {
                   //  color="#f194ff"
                   />  */}
 
+                 
                   <AppButton
                   onPress= {() => logOut()}
                   title="Log Out"
@@ -103,6 +114,14 @@ const styles = StyleSheet.create({
   btn: {
     width: 10,
     
+  },
+  sampleStyle: {
+    textDecorationLine: "underline",
+    textDecorationStyle: "solid",
+    textDecorationColor: "#000",
+    textAlign: "right",
+    padding: 15,
+    color: 'red'
   }
 });
 

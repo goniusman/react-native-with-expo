@@ -36,15 +36,15 @@ const SearchBar = ({ setSearchFocused }) => {
     const res = await postsApi.searchPost(value);
     // console.log(`/post/search/${value}`)
     // console.log(res)
-    if (res.data.success) {
+    if (res.success) {
       setNotFound('');
       // console.log(res)
-      setData(res.data.post); 
+      setData(res.post); 
+    }else{
+
+      setNotFound(res.message);
     }
 
-    if (!res.data.success) {
-      setNotFound(res.data.message);
-    }
   };
 
   const debounceSearch = debounce(handleSearch, 1000);

@@ -1,17 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableWithoutFeedback,
-  Button,
-  Text
+  Image, StyleSheet, Text, TouchableWithoutFeedback, View
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
-import Title from '../common/Title';
-import Subtitle from '../common/Subtitle';
 import client from "../../api/client";
+import Subtitle from '../common/Subtitle';
+import Title from '../common/Title';
+
 
 const BlockCard = ({ style, imageStyle, item, onPress }) => {
   const navigation = useNavigation();
@@ -29,14 +24,39 @@ const BlockCard = ({ style, imageStyle, item, onPress }) => {
     }
 
   }
+
+  const blogImage = (image,style) => {
+    // console.log(image);
+    if(image == undefined || image == null){
+      // console.log('i am null');
+     return (
+       <Image
+         blurRadius={1}
+            fadeDuration={10} 
+        source={require('../../../uploads/portfolio-2.jpg')}
+        style={[style, imageStyle]}
+      />
+     ) 
+    }else{
+      // console.log('i am not null');
+      return (
+        <Image
+          blurRadius={1}
+            fadeDuration={10} 
+         source={{uri : image}}
+         style={[style, imageStyle]}
+       />
+      ) 
+    }
+  }
  
   return (
      
     <View key={_id}>
 
       <View style={styles.actionbtn}>
-        <Text onPress={() => deleteItem(_id)} >Delete</Text>
-        <Text onPress={() => navigation.push('UpdateForm', {it})} >Update</Text>
+        {/* <Text onPress={() => deleteItem(_id)} >Delete</Text> */}
+        <Text style={{padding:10, textAlign:'right', color: '#fff', fontWeight:'bold'}} onPress={() => navigation.push('UpdateForm', {it})} >Update</Text>
       </View>
 
       <TouchableWithoutFeedback onPress={onPress} >
@@ -48,16 +68,21 @@ const BlockCard = ({ style, imageStyle, item, onPress }) => {
             height: 100,
             uri: url }} 
           style={[styles.image, imageStyle]} /> */}
-    
+          <View>
+              { blogImage(image, styles.image) }
+
+          </View>
           
-          <Image
+          {/* <Image
             blurRadius={1}
             fadeDuration={10} 
             // resizeMode={}
-            source={require('../../../assets/icon.png')} style={[styles.image, imageStyle]} />
+            source={require('../../../uploads/portfolio-1.jpg')} style={[styles.image, imageStyle]}
+            
+           /> */}
 
           <View style={styles.contentContainer}>
-            <Title>{title}</Title>
+            <Title>{  title}</Title>
             <Subtitle>{description}</Subtitle>
           </View>
 

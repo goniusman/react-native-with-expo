@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, StyleSheet, FlatList, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-import Title from '../common/Title';
+import React from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 import SmallCard from '../cards/SmallCard';
+import Title from '../common/Title';
+
 
 const HorizotalList = ({ title, data }) => {
   // console.log(data)
@@ -22,7 +22,7 @@ const HorizotalList = ({ title, data }) => {
           renderItem={({ item }) => (
             <SmallCard
               // key={item._id}
-              onPress={() => navigation.push('PostsDetail', { item })}
+              onPress={() => navigation.push('PostsDetail', { item, message: "nice to meet yuo" })}
               item={item}
             />
           )}

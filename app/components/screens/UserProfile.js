@@ -15,9 +15,6 @@ const UserProfile = () => {
 
   return (
     <View style={styles.container}>
-
-
-    
       <Text style={styles.email}>{profile.email}</Text>
       <Text style={styles.name}>{profile.name}</Text>
       <Text style={styles.role}>{profile.role}</Text>

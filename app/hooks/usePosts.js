@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import postsApi from "../api/postsApi";
 
 const usePosts = () => {
+
+  ////// I will use reducer method here
   const [posts, setPosts] = useState({});
   const [featuredPosts, setFeaturedPosts] = useState({});
   const [breakingPosts, setBreakingPosts] = useState([]);
@@ -35,13 +37,13 @@ const usePosts = () => {
   };
 
   const filterMultiplePosts = async () => {
-    setLoading(true);
+    setLoading(false);
     const allPosts = await postsApi.getAll();
     // console.log(allPosts);
     if(allPosts && allPosts.length > 0) {
       setFeaturedPosts(filterFeatured(allPosts));
       setPoliticalPosts(filterByCategory(allPosts, "politics"));
-      setBreakingPosts(filterByCategory(allPosts, "breaking-posts"));
+      setBreakingPosts(filterByCategory(allPosts, "breaking"));
       setEntertainmentPosts(filterByCategory(allPosts, "entertainment"));
       setTechPosts(filterByCategory(allPosts, "tech"));
       setLoading(false);

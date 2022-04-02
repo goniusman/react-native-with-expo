@@ -1,25 +1,24 @@
+import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View, DrawerActions } from 'react-native';
 import 'react-native-gesture-handler';
 import { useLogin } from '../../context/LoginProvider';
 import AppForm from '../AppForm/AppForm';
 import ImageUpload from '../AppForm/ImageUpload';
 // Import Custom Sidebar
 import CustomSidebarMenu from '../common/CustomSidebarMenu';
+import Verification from "../common/Verification";
 import PostsList from '../lists/PostsList';
 import AddPost from '../post/addpost';
 import UpdateForm from '../post/updatePost';
 import Home from '../screens/Home';
 import PostsDetail from '../screens/PostsDetail';
 import UserProfile from '../screens/UserProfile';
+import { NavigationContainer } from '@react-navigation/native';
 
 
-
-
-
- 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
  
@@ -27,16 +26,18 @@ const NavigationDrawerStructure = (props) => {
   // console.log('yes itworking   ');
   //Structure for the navigatin Drawer
   const toggleDrawer = () => {
+    console.log(props.navigationProps);
     //Props to open/close the drawer
     props.navigationProps.toggleDrawer();
 
+    // props.navigationProps.dispatch(DrawerActions.toggleDrawer())
     // props.navigation.navigate('Settings');
     // props.navigation.dispatch(DrawerActions.openDrawer());
   };
 
   return (
-    <View style={{ flexDirection: 'row' }}>
-      <TouchableOpacity onPress={toggleDrawer}>
+    <View style={{ flexDirection: 'row'}}>
+      <TouchableOpacity onPress={()=> toggleDrawer()}>
         {/*Donute Button Image */}
         <Image
           source={{
@@ -55,30 +56,46 @@ const homeScreenStack = ({navigation}) => {
   return (
     <>
        <Stack.Navigator
-       initialRouteName="Home"
-       screenOptions={{
-        // headerTransparent: false,
-            headerTitle: 'Home Page',
-        headerLeft: () => (
-          <NavigationDrawerStructure navigationProps={navigation} />
-        ),
-        headerStyle: { 
-          backgroundColor: '#f4511e', //Set Header color
-        },
-        headerTintColor: '#fff', //Set Header text color
-        headerTitleStyle: {
-          fontWeight: 'bold', //Set Header text style
-        },
-      }}
+        initialRouteName="Home"
+        // screenOptions={{
+        //   // headerTransparent: false,
+        //       headerTitle: 'Home Page',
+        //   // headerLeft: () => (
+        //   //   <NavigationDrawerStructure navigationProps={navigation} />
+        //   // ),
+        //   headerStyle: { 
+        //     backgroundColor: '#f4511e', //Set Header color
+        //   },
+        //   headerTintColor: '#fff', //Set Header text color
+        //   headerTitleStyle: {
+        //     fontWeight: 'bold', //Set Header text style
+        //   },
+        //   }}
     >
         <Stack.Screen
           name='Home'
           component={Home}
+          options={{
+            title: 'Home Page', //Set Header Title
+            headerLeft: ()=>
+              <NavigationDrawerStructure
+                navigationProps={navigation}
+              />,
+            headerStyle: {
+              backgroundColor: '#f4511e', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'bold', //Set Header text style
+            },
+          }}
         />
-        <Stack.Screen name='PostsDetail' component={PostsDetail} />
+        <Stack.Screen options={{title: 'Post Details'}} name='PostsDetail' component={PostsDetail} />
         <Stack.Screen name='PostsList' component={PostsList} />
         <Stack.Screen component={ImageUpload} name='ImageUpload' />
         <Stack.Screen component={UpdateForm} name='UpdateForm' />
+        <Stack.Screen component={Verification} name='Verification' />
+        
        </Stack.Navigator>
     </>
   );
@@ -108,7 +125,6 @@ const addPostScreenStack = ({ navigation }) => {
         name='AddPost'
         component={AddPost}
       />
- 
        </Stack.Navigator>
     </>
   );
@@ -200,23 +216,30 @@ const userProfileScreenStack = ({ navigation }) => {
 
 const MyDrawer = ({ navigation }) => {
   return (
+    <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="Home"
         screenOptions={{
-          // headerTransparent: false,
-              // headerTitle: 'Pull From Left',
-          headerLeft: () => (
-            <NavigationDrawerStructure navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#f4511e', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
+          activeTintColor: '#e91e63',
+          itemStyle: { marginVertical: 5 },
         }}
-        drawerContent={(props) => <CustomSidebarMenu {...props} />}>
+        // initialRouteName="Home"
+        // screenOptions={{
+        //   // headerTransparent: false,
+        //       // headerTitle: 'Pull From Left',
+        //   headerLeft: () => (
+        //     <NavigationDrawerStructure navigationProps={navigation} />
+        //   ),
+        //   headerStyle: {
+        //     backgroundColor: '#f4511e', //Set Header color
+        //   },
+        //   headerTintColor: '#fff', //Set Header text color
+        //   headerTitleStyle: {
+        //     fontWeight: 'bold', //Set Header text style
+        //   },
+        // }}
+        drawerContent={(props) => <CustomSidebarMenu {...props} />}
+        
+        >
         <Drawer.Screen
           name="Home"
           options={{headerShown: false}}
@@ -225,41 +248,40 @@ const MyDrawer = ({ navigation }) => {
        
        <Drawer.Screen
           name="UserProfile"
-          options={{headerShown: false}}
+          options={{headerShown: false, title: "User Profile"}}
           component={userProfileScreenStack}
         />
        <Drawer.Screen
           name="AddPost"
-          options={{headerShown: false}}
+          options={{headerShown: false, title: "Add Post"}}
           component={addPostScreenStack}
         />
 
-       {/* <Drawer.Screen
+       <Drawer.Screen
           name="ImageUpload"
           screenOptions={{ 
-            headerTransparent: true,
-            headerTitle: '',
+            // headerTransparent: false,
+            headerTitle: 'Image Upload',
+            title: "Image Upload"
           }}
+          options={{headerShown: true, title: "Image Upload"}}
           component={ImageUpload}
-        /> */}
+        />
         
-      {/* <Drawer.Screen name='PostsList' component={PostsList} />
-      <Drawer.Screen component={UpdateForm} name='UpdateForm' />
-      <Drawer.Screen name='PostsDetail' component={PostsDetail} />
- */}
-
-
+        
        </Drawer.Navigator>
-        
+    </NavigationContainer>   
   )
 }
 
 
 const StackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen component={AppForm} name='AppForm' />
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen component={AppForm} name='AppForm' />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

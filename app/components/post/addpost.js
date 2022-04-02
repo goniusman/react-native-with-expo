@@ -3,20 +3,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import client from "../../api/client";
 import { isValidObjField, updateError } from "../../utils/methods";
 import FormContainer from "../common/FormContainer";
 import FormInput from "../common/FormInput";
 import FormSubmitButton from "../common/FormSubmitButton";
 
-const cities = [
-  {name:"Los Angeles", id: 1},
-  {name:"Philadelphia", id: 2},
-  {name:"Chicago", id: 3},
-  {name:"Washington DC", id: 4},
-  {name:"New York", id: 5},
-  {name:"San Diego", id: 6},
-]
+import postsApi from "../../api/postsApi"; 
+
+// const cities = [
+//   {name:"Los Angeles", id: 1},
+//   {name:"Philadelphia", id: 2},
+//   {name:"Chicago", id: 3},
+//   {name:"Washington DC", id: 4},
+//   {name:"New York", id: 5},
+//   {name:"San Diego", id: 6},
+// ]
 
 
 
@@ -93,42 +94,28 @@ const PostForm = ({ navigation }) => {
 
   const submitPost = async (values, formikActions) => {
 
-    // console.log(token); 
-    function stripquotes(a) {
-          if (a.charAt(0) === '"' && a.charAt(a.length-1) === '"') {
-              return a.substr(1, a.length-2);
-          }
-          return a;
-      }
-    const token = await AsyncStorage.getItem('token');
     try{
       
-      // const { title, description, category, tag, author } = post;
-      const res = await client.post("/blog", post, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'authorization': `Bearer ${stripquotes(token)}`,
-        }
+      const res = await postsApi.addPost(post)
+
+      // console.log(res);
+      if (!res) {
+          setError("There are network error!")
+        }else{
+          setPost({ 
+            title: "",
+            description: "",
+            category: "",
+            tag: "",
+            author: "",
+          })
+
+        formikActions.resetForm();
+        formikActions.setSubmitting(false);
+        
       }
-      );
 
-    // console.log(res);
-    // if (res.data.success) {
-      
-    // }
-
-    setPost({ 
-      title: "",
-      description: "",
-      category: "",
-      tag: "",
-      author: "",
-    })
-
-    formikActions.resetForm();
-    formikActions.setSubmitting(false);
-
+   
 
     }catch (error) {
       console.log(error.message);

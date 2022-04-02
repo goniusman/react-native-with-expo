@@ -1,17 +1,13 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
-  View,
-  StyleSheet,
-  Image,
-  TouchableWithoutFeedback,
-  Text,
+  Image, StyleSheet, TouchableWithoutFeedback, View, Text
 } from 'react-native';
-import Title from '../common/Title';
-import Subtitle from '../common/Subtitle';
-
-import { useNavigation } from '@react-navigation/native';
-
 import client from "../../api/client";
+import Subtitle from '../common/Subtitle';
+import Title from '../common/Title';
+
+
 
 
 const FlatCard = ({ item, onPress }) => {
@@ -31,28 +27,56 @@ const FlatCard = ({ item, onPress }) => {
 
   }
 
+  const blogImage = (image,style) => {
+    // console.log(image);
+    if(image == undefined || image == null){
+      // console.log('i am null');
+     return (
+       <Image
+         blurRadius={1}
+          fadeDuration={10} 
+        source={require('../../../uploads/portfolio-5.jpg')}
+        style={style}
+      />
+     ) 
+    }else{
+      // console.log(image);
+      return (
+        <Image
+          blurRadius={1}
+            fadeDuration={10} 
+         source={{uri : image}}
+         style={style}
+       />
+      ) 
+    }
+  }
 
   return (
 
     <View>
 
     {/* <View style={styles.actionbtn}>
-          
         <Text onPress={() => deleteItem(_id)} >Delete</Text>
         <Text onPress={() => navigation.push('UpdateForm', {it})} >Update</Text>
-
-        
-        
     </View> */}
 
     <TouchableWithoutFeedback onPress={onPress} >
       <View style={styles.container}>
-   
-        <Image source={require('../../../assets/icon.png')} style={styles.image} />
+
+          <View style={styles.actionbtn}>
+            {/* <Text onPress={() => deleteItem(_id)} >Delete</Text> */}
+            <Text style={{paddingLeft:5, textAlign:'right', color: '#000', fontWeight:'bold'}} onPress={() => navigation.push('UpdateForm', {it})} >Update</Text>
+          </View>
+
+              { blogImage(image, styles.image) }
+
+
         <View style={styles.contentContainer}>
-          <Title>{title}</Title>
+          <Title>{title.substr(0, 23)}</Title>
           <Subtitle>{description }</Subtitle>
         </View>
+
       </View>
     </TouchableWithoutFeedback>
 
@@ -79,16 +103,15 @@ const styles = StyleSheet.create({
     flex: 0.65,
     paddingHorizontal: 5,
   },
-  actionbtn:{
-    marginTop: '5px',
-    padding: '2px',
-    position: 'absolute',
+  actionbtn: {
     zIndex: 999,
-    // display: 'flex',
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
+    display: 'flex',
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    textAlign: 'right',
   }
 });
 

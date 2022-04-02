@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import { StackActions } from "@react-navigation/native";
-
+import { useNavigation } from '@react-navigation/native';
 import { Formik } from "formik";
 import * as Yup from "yup";
 // import SignupForm from "../AppForm/SignupForm";
@@ -10,7 +10,7 @@ import FormContainer from "../common/FormContainer";
 import FormInput from "../common/FormInput"; 
 import FormSubmitButton from "../common/FormSubmitButton";
 
-import client from "../../api/client"; 
+import postsApi from "../../api/postsApi"; 
 
 // const validationSchema = Yup.object({
 //   title: Yup.string()
@@ -32,7 +32,7 @@ import client from "../../api/client";
 // });
 
 const UpdateForm = ({ route }) => {
-  
+  const navigation = useNavigation();
   const [error, setError] = useState("");
   const [post, setPost] = useState({ 
     title: "",
@@ -93,16 +93,11 @@ const UpdateForm = ({ route }) => {
 
   const submitPost = async (values, formikActions) => {
 
-
-    // console.log(post);
-    const { title, description, category, tag, author } = post;
-    const res = await client.put(`/post/${item._id}`, {
-      title, description, category, tag, author
-    });
+    const res = await postsApi.updatePost(post, item._id)
 
     // console.log(res);
-    if (res.data.success) {
-      console.log(res.data.data);
+    if (!res) {
+      setError("There are network problem!")
     }
 
     setPost({ 
@@ -115,11 +110,14 @@ const UpdateForm = ({ route }) => {
 
     formikActions.resetForm();
     formikActions.setSubmitting(false);
+    navigation.push("Home")
+
+
   };
 
   
   return (
-
+<ScrollView>
     <FormContainer>
       <Formik
         initialValues={post}
@@ -138,6 +136,13 @@ const UpdateForm = ({ route }) => {
           const { title, description, category, tag, author } = post;
           return (
             <>
+
+            {error ? (
+              <Text style={{ color: 'red', fontSize: 18, textAlign: 'center' }}>
+                {error}
+              </Text>
+            ) : null}
+
             <View style={styles.space}> 
               <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>Update Post</Text>
             </View>
@@ -209,6 +214,7 @@ const UpdateForm = ({ route }) => {
         }}
       </Formik>
     </FormContainer>
+    </ScrollView>
   );
 };
 

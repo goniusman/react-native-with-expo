@@ -1,5 +1,6 @@
+import 'react-native-gesture-handler';
 import {
-  DrawerContentScrollView, DrawerItem, DrawerItemList
+  DrawerContentScrollView, DrawerItem,DrawerItemList
 } from '@react-navigation/drawer';
 import React from 'react';
 import {
@@ -19,16 +20,44 @@ const CustomSidebarMenu =  (props) => {
   const {profile} = useLogin();
   // console.log(profile);
 
+  const profileImage = (style) => {
+    if(profile.image == undefined || profile.image == null){
+      // console.log('i am null');
+     return (
+       <Image
+        source={require('../../../uploads/portfolio-1.jpg')}
+        style={style}
+      />
+     ) 
+    }else{
+      // console.log('i am not null');
+      return (
+        <Image
+         source={{uri : profile.image}}
+         style={style}
+       />
+      ) 
+    }
+  }
+
+
   return (
     <SafeAreaView style={{ flex: 1}}>
       {/*Top Large Image */}
-      <Image
-        source={{ uri: profile.image }}
-        style={styles.sideMenuProfileIcon}
-      />
-      <DrawerContentScrollView {...props}>
+     <View>
+        {profileImage(styles.sideMenuProfileIcon)}
+     </View>
+      
+      
+      <DrawerContentScrollView {...props} style={{marginTop: 20}}>
         <DrawerItemList {...props} />
-        <DrawerItem
+
+
+
+
+
+
+        {/* <DrawerItem
           label="Visit Us"
           onPress={() => Linking.openURL('https://aboutreact.com/')}
         />
@@ -43,7 +72,7 @@ const CustomSidebarMenu =  (props) => {
             source={{ uri: BASE_PATH + 'star_filled.png' }}
             style={styles.iconStyle}
           />
-        </View>
+        </View> */}
       </DrawerContentScrollView>
    
     </SafeAreaView>
@@ -54,7 +83,7 @@ const styles = StyleSheet.create({
   sideMenuProfileIcon: {
     resizeMode: 'center',
     width: 100,
-    height: 100,
+    height: 200,
     borderRadius: 100 / 2,
     alignSelf: 'center',
   },

@@ -4,11 +4,12 @@ import VerticalList from './VerticalList';
 
 const PostsList = ({ route }) => {
   const data = route.params;
+  // console.log(data);
   const header = data[0].category.split('-').join(' ').toUpperCase();
   return (
     <>
       <View style={styles.headerContainer}>
-        <Text style={styles.categoryTitle}>{header}</Text>
+        <Text style={styles.categoryTitle}> All {header} Posts </Text>
       </View>
       <ScrollView>
         <VerticalList data={data} />

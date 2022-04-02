@@ -4,16 +4,13 @@ import * as ImagePicker from 'expo-image-picker';
 // import * as permissions from 'expo-permissions';
 import { StackActions } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import {useLogin} from '../../context/LoginProvider'
-import client from '../../api/client'; 
+import userApi from '../../api/userApi'
    
 const ImageUpload = props => {
   const [profileImage, setProfileImage] = useState('');
   const [progress, setProgress] = useState(0);
   // const { token } = props.route.params;
-
-
 
   const openImageLibrary = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -34,14 +31,7 @@ const ImageUpload = props => {
     }
   };
 
-
- 
-
   const uploadProfileImage = async () => {
-
-  
-   
-    // console.log(token) 
 
     const formData = new FormData();
     // console.log(profileImage);
@@ -51,31 +41,9 @@ const ImageUpload = props => {
       type: 'image/jpg',
     });
 
-    const token = await AsyncStorage.getItem('token');
-   console.log(token);
-    function stripquotes(a) {
-      if (a.charAt(0) === '"' && a.charAt(a.length-1) === '"') {
-          return a.substr(1, a.length-2);
-      }
-      return a;
-    }
-
     try {
-      const res = await client.put('/user/profile-picture', formData, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'multipart/form-data',
-          'authorization': `Bearer ${stripquotes(token)}`,
-        },
-      });
-      // console.log(res.data)
-      if (res.data.success) {
-
-        // setProfile(res.data.user);
-        // setIsLoggedIn(true);
-        // await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
-        // await AsyncStorage.setItem("token", JSON.stringify(res.data.token));
-
+      const res = await userApi.profilePictureUpdate(formData);
+      if (res) {
         props.navigation.dispatch(StackActions.replace('UserProfile'));
       }
     } catch (error) {

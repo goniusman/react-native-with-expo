@@ -58,7 +58,7 @@ export default function AppForm({ navigation }) {
         style={{
           flexDirection: "row",
           paddingHorizontal: 20,
-          marginBottom: 20,
+          // marginBottom: 20,
         }}
       >
         <FormSelectorBtn

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Development App",
-    "slug": "anotherapp",
+    "name": "Blog App",
+    "slug": "blogapp",
     "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,14 +14,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "package" : "test.todo",
+      "package": "test.todo",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

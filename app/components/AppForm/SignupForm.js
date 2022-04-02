@@ -1,18 +1,15 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { StackActions } from "@react-navigation/native"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { Formik } from "formik";
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
+import { StackActions } from '@react-navigation/native';
+import * as Yup from "yup";
 import { useLogin } from '../../context/LoginProvider';
 import { isValidEmail, isValidObjField, updateError } from "../../utils/methods";
 import FormContainer from "../common/FormContainer";
 import FormInput from "../common/FormInput";
 import FormSubmitButton from "../common/FormSubmitButton";
-
-import { Formik } from "formik";
-import * as Yup from "yup";
-
-import client from "../../api/client";
+import userApi from '../../api/userApi'
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -38,7 +35,7 @@ const SignupForm = ({ navigation }) => {
   const { setIsLoggedIn, setProfile } = useLogin();
   const userInfo = {
     name: "",
-    username: "",
+    username: "default",
     email: "",
     password: "",
     confirmPassword: "",
@@ -82,48 +79,29 @@ const SignupForm = ({ navigation }) => {
   // };
 
   const signUp = async (values, formikActions) => {
-    const res = await client.post("/user/register", {
-      ...values,
-    });
 
-    // console.log(res.data);
-    
-    if (res.data.success) {
+    const res = await userApi.registerUser({...values})
 
-        setIsLoggedIn(true);
-        await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
+    if (typeof res === "boolean") {
 
-       
-        // setUserInfo({ email: '', password: '' });
-        setProfile(res.data.user);
-     
-
-
-      const signInRes = await client.post("/user/login", {
+      const signInRes = await userApi.loginUser( {
         email: values.email,
         password: values.password,
       });
 
-      if (signInRes.data.success) {
-
-        setProfile(res.data.user);
+      if (signInRes) {
         setIsLoggedIn(true);
-        await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
-        await AsyncStorage.setItem("token", JSON.stringify(res.data.token));
+ 
+        // navigation.dispatch(StackActions.replace('ImageUpload'));
+        navigation.dispatch(StackActions.replace('Verification'));
 
-        navigation.dispatch(StackActions.replace('ImageUpload'));
-
-        // navigation.dispatch(
-        //   StackActions.replace("ImageUpload", {
-        //     token: signInRes.data.token,
-        //   })
-        // );
-        
       }
 
       formikActions.resetForm();
       formikActions.setSubmitting(false);
 
+    }else{
+      setError(res)
     }
 
 
@@ -131,6 +109,11 @@ const SignupForm = ({ navigation }) => {
 
   return (
     <FormContainer>
+      {error ? (
+        <Text style={{ color: 'red', fontSize: 18, textAlign: 'center' }}>
+          {error}
+        </Text>
+      ) : null}
       <Formik
         initialValues={userInfo}
         validationSchema={validationSchema}
@@ -156,14 +139,14 @@ const SignupForm = ({ navigation }) => {
                 label="Full Name"
                 placeholder="John Smith"
               />
-              <FormInput
+              {/* <FormInput
                 value={username}
                 error={touched.username && errors.username}
                 onChangeText={handleChange("username")}
                 onBlur={handleBlur("username")}
                 label="username"
                 placeholder="johnsmith"
-              />
+              /> */}
               <FormInput
                 value={email}
                 error={touched.email && errors.email}

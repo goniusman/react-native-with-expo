@@ -12,7 +12,7 @@ const SmallCard = ({ item, onPress }) => {
   const navigation = useNavigation();
   
   const handleViewMore = async category => {
-    const result = await postsApi.getByCategory(category);
+    const result = await postsApi.getByCategoryTest(category);
     navigation.navigate('PostsList', result);
   };
   if (item.type === 'viewMore') {

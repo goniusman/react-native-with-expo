@@ -2,7 +2,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { Picker } from '@react-native-community/picker';
 import { Formik } from "formik";
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Platform, KeyboardAvoidingView, SafeAreaView } from "react-native";
+import { WebView } from 'react-native-webview';
+import {actions, RichEditor, RichToolbar} from "react-native-pell-rich-editor";
 import { isValidObjField, updateError } from "../../utils/methods";
 import FormContainer from "../common/FormContainer";
 import FormInput from "../common/FormInput";
@@ -41,6 +43,9 @@ import postsApi from "../../api/postsApi";
 // });
 
 const PostForm = ({ navigation }) => {
+
+  const richText = React.useRef();
+
   const [post, setPost] = useState({ 
     title: "",
     description: "",
@@ -60,7 +65,7 @@ const PostForm = ({ navigation }) => {
 
   const handleOnChangeText = (value, fieldName) => {
     setPost({ ...post, [fieldName]: value });
-    // console.log(value)
+    console.log(value)
   };
 
   const isValidForm = () => {
@@ -161,7 +166,7 @@ const PostForm = ({ navigation }) => {
               />
 
               
-              <FormInput
+              {/* <FormInput
                 name="description"
                 value={description}
                 error={touched.description && errors.description}
@@ -170,7 +175,27 @@ const PostForm = ({ navigation }) => {
                 autoCapitalize="none"
                 label="description"
                 placeholder="Type something details here..."
-              />
+              /> */}
+
+              <ScrollView>
+                <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}	   style={{ flex: 1 }}>
+                    <Text>Description:</Text>
+                    <RichEditor
+                        ref={richText}
+                        name="description"
+                        value={description}
+                        error={touched.description && errors.description}
+                        onChangeText={ value => handleOnChangeText(value, 'description')}
+                        onBlur={handleBlur("description")}
+                        autoCapitalize="none"
+                        label="description"
+                        placeholder="Type something details here..."
+                    />
+                </KeyboardAvoidingView>
+            </ScrollView>
+
+
+
 
 {/* <View>
 <Picker 
@@ -190,7 +215,14 @@ const PostForm = ({ navigation }) => {
      </Picker>
 </View> */}
 
+{/* <RichEditor
+   ref={richText}
+  initialContentHTML={'Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>'}
+  editorInitializedCallback={() => this.onEditorInitialized()}
+/> */}
 
+
+   
 
 
               <FormInput

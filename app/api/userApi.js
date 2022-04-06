@@ -45,6 +45,7 @@ const getSingleUser = async () => {
       'authorization': `Bearer ${stripquotes(token)}`,
     }
   });
+  // console.log(res.data);
 
   if(res.data.success){
     let user = res.data.user

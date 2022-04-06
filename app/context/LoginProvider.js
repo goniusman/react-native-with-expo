@@ -19,11 +19,11 @@ const LoginProvider = ({ children }) => {
 
     if(token){
       const result = await userApi.getSingleUser() 
-
-      if(result != null){
+      if(result !== null){
         setProfile(result) 
         setIsLoggedIn(true);
       }else{
+        await AsyncStorage.removeItem('token')
         setIsLoggedIn(false);
       }
     }

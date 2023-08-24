@@ -21,11 +21,11 @@ const PostsDetail = ({ route }) => {
   const [allComments, setAllComments] = useState({});
   const [comments, setComments] = useState({
     comment: "",
-    postId: route.params.item._id
+    postId: route.params?.item?._id
   });
   const [error, setError] = useState('');
   const [relatedPosts, setRelatedPosts] = useState([]);
-  const { _id: postId, category: postCategory } = route.params.item;
+  const { _id: postId, category: postCategory } = route.params?.item;
   // console.log(route)
   const [loading, setLoading] = useState(true);
 
@@ -49,7 +49,7 @@ const PostsDetail = ({ route }) => {
       setError('Feting Error post by category')
     }
 
-    setRelatedPosts(result.filter(item => item._id !== postId));
+    setRelatedPosts(result.filter(item => item?._id !== postId));
     
   };
 
@@ -137,7 +137,7 @@ const PostsDetail = ({ route }) => {
         !error ? (
           <ScrollView style={styles.container}>
      
-            <View  key={ _id }>
+            <View  key={ _id && _id }>
             {image ? (
               <Image style={styles.image} source={{ uri: image}} />
             ) : (
@@ -146,7 +146,7 @@ const PostsDetail = ({ route }) => {
             )}
                
               <View style={styles.contentContainer}>
-                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.title}>{title && title}</Text>
                 <Text style={styles.content}>{description}</Text>
               </View>
 

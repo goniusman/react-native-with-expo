@@ -6,8 +6,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "[javascript]": {
-    "editor.formatOnSave": false,
-    "editor.defaultFormatter": null
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
   "[javascriptreact]": {
     "editor.formatOnSave": false,

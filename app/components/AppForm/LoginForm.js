@@ -37,18 +37,24 @@ const LoginForm = () => {
   };
 
   const submitForm = async () => {
-    if (isValidForm()) {
-      const res = await userApi.loginUser({ ...userInfo }); 
-        if (typeof res  === "boolean") {
-          setUserInfo({ email: '', password: '' });
-          setIsLoggedIn(true);
+    try {
+      if (isValidForm()) {
+           console.log('submited');
+            const res = await userApi.loginUser({ ...userInfo }); 
+            if (typeof res  === "boolean") {
+              setUserInfo({ email: '', password: '' });
+              setIsLoggedIn(true);
+            }else{
+                setError(res)
+            }
+          
         }else{
-            setError(res)
+          console.log('Invalid Data')
         }
-      
-    }else{
-      console.log('Invalid Data')
+    } catch (error) {
+      console.log(error);
     }
+ 
   };
 
   return (

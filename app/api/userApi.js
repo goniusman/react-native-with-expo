@@ -12,6 +12,7 @@ function stripquotes(a) {
 
 const registerUser = async (user) => {
   const res = await apiClient.post("/user/register", user);
+
   // console.log(res);
   if (res.data.success) {
     await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
@@ -24,7 +25,9 @@ const registerUser = async (user) => {
 }
 
 const loginUser = async (user) => {
-  const res = await apiClient.post("/user/login", user);
+  try {
+    console.log(user);
+      const res = await apiClient.post("/user/login", user);
   if (res.data.success) {
       await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
       await AsyncStorage.setItem("token", JSON.stringify(res.data.token));
@@ -33,6 +36,10 @@ const loginUser = async (user) => {
     let message = res.data.message;
     return message;
   }
+  } catch (error) {
+    console.log(error);
+  }
+
 }
 
 

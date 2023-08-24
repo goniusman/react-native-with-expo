@@ -45,12 +45,13 @@ const getSingleUser = async () => {
       'authorization': `Bearer ${stripquotes(token)}`,
     }
   });
-  // console.log(res.data);
+  console.log(res);  
 
   if(res.data.success){
     let user = res.data.user
     return user
   }else{
+    await AsyncStorage.removeItem('token')
     return null;
   }
  

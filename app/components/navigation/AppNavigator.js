@@ -52,44 +52,46 @@ const NavigationDrawerStructure = (props) => {
 };
 
 
-const homeScreenStack = ({navigation}) => {
+const HomeScreenStack = ({navigation}) => {
   return (
     <>
        <Stack.Navigator
-        initialRouteName="Home"
-        // screenOptions={{
-        //   // headerTransparent: false,
-        //       headerTitle: 'Home Page',
-        //   // headerLeft: () => (
-        //   //   <NavigationDrawerStructure navigationProps={navigation} />
-        //   // ),
-        //   headerStyle: { 
-        //     backgroundColor: '#f4511e', //Set Header color
-        //   },
-        //   headerTintColor: '#fff', //Set Header text color
-        //   headerTitleStyle: {
-        //     fontWeight: 'bold', //Set Header text style
-        //   },
-        //   }}
-    >
-        <Stack.Screen
-          name='Home'
-          component={Home}
-          options={{
-            title: 'Home Page', //Set Header Title
-            headerLeft: ()=>
-              <NavigationDrawerStructure
-                navigationProps={navigation}
-              />,
-            headerStyle: {
+          initialRouteName="Home"
+          screenOptions={{
+            // headerTransparent: false,
+            headerTitle: 'Home Pages',
+            headerLeft: () => (
+              <NavigationDrawerStructure navigationProps={navigation} />
+            ),
+            headerStyle: { 
               backgroundColor: '#f4511e', //Set Header color
             },
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'bold', //Set Header text style
             },
-          }}
+            }}
+        >
+        <Stack.Screen
+          name='Home'
+          component={Home}
+          // options={{
+          //   title: 'Home Page', //Set Header Title
+          //   headerLeft: ()=>
+          //     <NavigationDrawerStructure
+          //       navigationProps={navigation}
+          //     />,
+          //   headerStyle: {
+          //     backgroundColor: '#f4511e', //Set Header color
+          //   },
+          //   headerTintColor: '#fff', //Set Header text color
+          //   headerTitleStyle: {
+          //     fontWeight: 'bold', //Set Header text style
+          //   },
+          // }}
         />
+
+
         <Stack.Screen options={{title: 'Post Details'}} name='PostsDetail' component={PostsDetail} />
         <Stack.Screen name='PostsList' component={PostsList} />
         <Stack.Screen component={ImageUpload} name='ImageUpload' />
@@ -101,7 +103,7 @@ const homeScreenStack = ({navigation}) => {
   );
 }
 
-const addPostScreenStack = ({ navigation }) => {
+const AddPostScreenStack = ({ navigation }) => {
   return (
     <>
        <Stack.Navigator
@@ -130,7 +132,7 @@ const addPostScreenStack = ({ navigation }) => {
   );
 }
 
-const userProfileScreenStack = ({ navigation }) => {
+const UserProfileScreenStack = ({ navigation }) => {
   return (
     <>
        <Stack.Navigator
@@ -240,21 +242,26 @@ const MyDrawer = ({ navigation }) => {
         drawerContent={(props) => <CustomSidebarMenu {...props} />}
         
         >
+
         <Drawer.Screen
           name="Home"
-          options={{headerShown: false}}
-          component={homeScreenStack}
+          options={{headerShown: false, title: "Home"}}
+          component={HomeScreenStack}
         />
        
+
        <Drawer.Screen
           name="UserProfile"
           options={{headerShown: false, title: "User Profile"}}
-          component={userProfileScreenStack}
-        />
+          component={UserProfileScreenStack}
+        /> 
+        
+      
+        
        <Drawer.Screen
           name="AddPost"
           options={{headerShown: false, title: "Add Post"}}
-          component={addPostScreenStack}
+          component={AddPostScreenStack}
         />
 
        <Drawer.Screen
@@ -291,8 +298,8 @@ const AppNavigator = () => {
   // return <LoggedIn />
 };
 
+export default AppNavigator;
+
 const styles = StyleSheet.create({
   container: {},
 });
-
-export default AppNavigator;
